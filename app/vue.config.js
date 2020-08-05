@@ -2,7 +2,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
 		productionSourceMap: false,
-		publicPath: process.env.NODE_ENV == 'production' ? '/statify/' : '/',
+		publicPath: '/',
 		configureWebpack: {
 				devtool: 'source-map',
 				resolve: {
