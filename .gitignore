@@ -115,3 +115,6 @@ tags
 
 .emulator
 service-account.json
+
+
+deploy.sh
