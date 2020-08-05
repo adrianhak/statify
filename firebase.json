@@ -1,0 +1,26 @@
+{
+  "hosting": {
+    "public": "app/dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "emulators": {
+  	"firestore": {
+		"host": "0.0.0.0",
+		"port": 8081
+  	},
+	"functions": {
+		"host":"0.0.0.0",
+		"port": 5001
+	}
+  }
+}
