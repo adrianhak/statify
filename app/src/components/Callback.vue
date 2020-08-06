@@ -16,7 +16,7 @@ import router from '../router';
 import { auth } from '../firebaseConfig';
 export default {
 	created() {
-		if (this.$route.query.code) {
+		if (this.$route.query.code && localStorage.getItem('state') === this.$route.query.state) {
 			this.$jsonp(process.env.VUE_APP_TOKEN_URL,{code:this.$route.query.code,state:this.$route.query.state})
 				.then(async json => {
 					this.$store.commit('SET_ACCESS_TOKEN',json.accessToken);
@@ -28,6 +28,7 @@ export default {
 					this.$router.push('/login');
 				});
 		} else {
+			// Redirect if not accessed correctly
 			this.$router.push('/login');
 		}
 	},

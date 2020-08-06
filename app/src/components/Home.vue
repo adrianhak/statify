@@ -8,7 +8,7 @@
 				</div>
           <h2 class="subtitle">Your music taste in numbers</h2>
           <div class="launchpage-buttons">
-            <a :href="loginURL" class="button is-dark start-btn is-rounded">
+            <a @click="login" class="button is-dark start-btn is-rounded">
               <img class="spotify-logo" width="30px" src="../assets/spotify_icon_white.png" />Log in with Spotify
             </a>
           </div>
@@ -24,10 +24,34 @@ export default {
   name: "Home",
   data() {
 		return {
-			loginURL: process.env.VUE_APP_LOGIN_URL,
+			loginURL: 
+				'https://accounts.spotify.com/authorize'+
+				'?client_id='+process.env.VUE_APP_SPOTIFY_CLIENT_ID+
+				'&redirect_uri='+process.env.VUE_APP_SPOTIFY_REDIRECT_URI+
+				'&scope='+process.env.VUE_APP_SPOTIFY_SCOPES+
+				'&response_type=code'+
+				'&show_dialog=true'
+								
+		}
+	},
+	methods: {
+		generateState() {
+			const validChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			let array = new Uint8Array(40);
+			crypto.getRandomValues(array);
+			array = array.map(x => validChars.charCodeAt(x % validChars.length));
+			return String.fromCharCode.apply(null, array);
+		},
+		login() {
+			// Generate random state parameter to protect against CSRF
+			localStorage.setItem('state',this.generateState());
+			console.log(this.loginURL);
+			window.location.href = this.loginURL+'&state='+localStorage.getItem('state');
+			
 		}
 	},
 	created() {
+
 		this.$Progress.finish();
 	}
 };
