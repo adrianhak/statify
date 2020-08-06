@@ -13,7 +13,6 @@
 		</div>
 
 		<carousel
-			:ref=carouselRef
 			:perPage=1
 			:speed=250
 			:minSwipeDistance=50
